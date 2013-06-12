@@ -18,4 +18,14 @@ class Card
 		$this->suit   = $suit;
 		$this->number = $number;
 	}
+
+	public function get_suit()
+	{
+		return $this->suit;
+	}
+
+	public function get_number()
+	{
+		return $this->number;
+	}
 }
