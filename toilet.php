@@ -15,7 +15,9 @@ class Toilet
 
 	public function round()
 	{
-		// TODO: Check for 0 unused cards
+		if (count($this->unused_cards) === 0) {
+			return false;
+		}
 
 		// Add cards until the deck has at least 4.
 		while (count($this->working_deck) < 4) {
