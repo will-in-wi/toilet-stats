@@ -1,6 +1,6 @@
 <?php
 
-require_once 'card.php';
+namespace ToiletStats\Cards
 
 /**
 * Create a deck

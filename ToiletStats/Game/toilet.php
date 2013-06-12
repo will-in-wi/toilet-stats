@@ -1,5 +1,7 @@
 <?php
 
+namespace ToiletStats\Game
+
 /**
 * Game code
 */
