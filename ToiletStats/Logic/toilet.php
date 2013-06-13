@@ -1,6 +1,6 @@
 <?php
 
-namespace ToiletStats\Game
+namespace ToiletStats\Logic
 
 /**
 * Game code
