@@ -1,0 +1,5 @@
+{
+    "require": {
+        "symfony/class-loader": "v2.3.1"
+    }
+}

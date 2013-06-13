@@ -1,6 +1,6 @@
 <?php
 
-namespace ToiletStats\Cards
+namespace ToiletStats\Cards;
 
 /**
 * Cards
