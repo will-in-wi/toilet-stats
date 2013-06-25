@@ -28,7 +28,7 @@ function play_game()
 	return count($game->get_deck());
 }
 
-for ($i=0; $i < 20000; $i++) { 
+for ($i=0; $i < 100000; $i++) { 
 	$remaining_cards = play_game();
 	echo $remaining_cards . "\n";
 }
