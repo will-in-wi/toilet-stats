@@ -21,4 +21,15 @@ class Deck
 
 		return $deck;
 	}
+
+	static public function format($deck)
+	{
+		foreach ($deck as $i => $card) {
+			print $i . ' => ';
+			print Suits::get_formatted_number($card->get_number());
+			print ' of ';
+			print Suits::get_suit_symbol($card->get_suit());
+			print "\n";
+		}
+	}
 }

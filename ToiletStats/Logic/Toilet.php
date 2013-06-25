@@ -15,20 +15,51 @@ class Toilet
 		$this->unused_cards = $deck;
 	}
 
+	public function get_deck()
+	{
+		return $this->working_deck;
+	}
+
 	public function round()
 	{
 		if (count($this->unused_cards) === 0) {
 			return false;
 		}
 
-		$this->add_card();
 
 		// Add cards until the deck has at least 4.
-		while (count($this->working_deck) < 4) {
+		do {
 			$this->add_card();
+		} while (count($this->working_deck) < 4 && count($this->unused_cards) > 0);
+
+
+		// Play a round.
+		$did_stuff = true;
+		while ($did_stuff === true) {
+			$same_number = $this->check_same_number();
+			$same_suit = $this->check_same_suit();
+
+			$did_stuff = ($same_suit || $same_number);
 		}
 
-		// TODO: stick the stuff below in a loop.
+		return true;
+	}
+
+	protected function add_card()
+	{
+		$this->working_deck[] = array_shift($this->unused_cards);
+	}
+
+	protected function discard_card($i)
+	{
+		unset($this->working_deck[$i]);
+	}
+
+	protected function check_same_number()
+	{
+		if (count($this->working_deck) < 4) {
+			return false;
+		}
 
 		$last_index = count($this->working_deck) - 1;
 		$top_card = $this->working_deck[$last_index];
@@ -41,16 +72,34 @@ class Toilet
 			$this->discard_card($last_index-1);
 			$this->discard_card($last_index-2);
 			$this->discard_card($last_index-3);
+
+			// Clean up key numbering
+			$this->working_deck = array_values($this->working_deck);
+			return true;
 		}
+
+		return false;
 	}
 
-	protected function add_card()
+	protected function check_same_suit()
 	{
-		$this->working_deck[] = array_shift($this->unused_cards);
-	}
+		if (count($this->working_deck) < 4) {
+			return false;
+		}
 
-	protected function discard_card($i)
-	{
-		unset($this->working_deck[$i]);
+		$last_index = count($this->working_deck) - 1;
+		$top_card = $this->working_deck[$last_index];
+		$fourth_card = $this->working_deck[$last_index - 3];
+
+		// Check for the same suit four cards back.
+		if ($top_card->get_suit() === $fourth_card->get_suit()) {
+			// Pull the last four cards and discard them.
+			$this->discard_card($last_index-1);
+			$this->discard_card($last_index-2);
+			$this->working_deck = array_values($this->working_deck);
+			return true;
+		}
+
+		return false;
 	}
 }

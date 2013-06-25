@@ -1,30 +1,34 @@
 <?php
 
 include 'vendor/autoload.php';
-
-// require_once '/path/to/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
-
 use Symfony\Component\ClassLoader\UniversalClassLoader;
+use ToiletStats\Cards\Deck;
 
 $loader = new UniversalClassLoader();
-
-// You can search the include_path as a last resort.
 $loader->useIncludePath(true);
-
-// $loader->registerNamespace('ToiletStats', __DIR__.'ToiletStats');
-// $loader->registerNamespace('ToiletStats\Cards', __DIR__.'ToiletStats/Cards');
-// $loader->registerNamespace('ToiletStats\Logic', __DIR__.'ToiletStats/Logic');
-// ... register namespaces and prefixes here - see below
-
 $loader->register();
 
+function play_game()
+{
+	$deck = \ToiletStats\Cards\Deck::generate();
 
-$deck = \ToiletStats\Cards\Deck::generate();
+	// Shuffle deck
+	shuffle($deck);
 
-// Shuffle deck
-shuffle($deck);
+	$game = new \ToiletStats\Logic\Toilet($deck);
 
-$game = new Toilet($deck);
-$game->round();
+	$playing = true;
+	while ($playing === true) {
+		// echo "Play round!\n";
+		$playing = $game->round();
 
-// var_dump($deck);
+		// Deck::format($game->get_deck());
+	}
+
+	return count($game->get_deck());
+}
+
+for ($i=0; $i < 20000; $i++) { 
+	$remaining_cards = play_game();
+	echo $remaining_cards . "\n";
+}
