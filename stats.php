@@ -10,7 +10,18 @@ $loader->register();
 
 function play_game()
 {
-	$deck = \ToiletStats\Cards\Deck::generate();
+	$deck = array();
+	for ($i=0; $i < 1; $i++) { 
+		$deck1 = \ToiletStats\Cards\Deck::generate();
+		$deck = array_merge($deck, $deck1);
+	}
+	// $deck1 = \ToiletStats\Cards\Deck::generate();
+	// $deck2 = \ToiletStats\Cards\Deck::generate();
+
+	// $deck = array_merge($deck1, $deck2);
+
+	var_dump(count($deck));
+	// exit();
 
 	// Shuffle deck
 	shuffle($deck);
@@ -28,7 +39,7 @@ function play_game()
 	return count($game->get_deck());
 }
 
-for ($i=0; $i < 100000; $i++) { 
+for ($i=0; $i < 1; $i++) { 
 	$remaining_cards = play_game();
 	echo $remaining_cards . "\n";
 }
